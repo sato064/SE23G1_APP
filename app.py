@@ -4,6 +4,11 @@ import matplotlib.pyplot as plt
 import csv
 import pandas as pd
 import japanize_matplotlib
+import requests
+import json
+import os
+
+GITHUB_TOKEN = os.getenv('GITHUB_TOKEN')
 
 st.set_page_config(
     page_title="Inspection Dashboard",
@@ -97,14 +102,14 @@ if not sub:
         submitted = st.form_submit_button("記録")
 
     if submitted:
-        f = open('files/srs_1.txt', 'w')
-        f.write('T')
-        f.close()
-        f = open('files/srs_1_com.txt', 'w')
-        f.write(review)
-        f.close()
-        st.success('保存しました')
-        st.text(review)
+        url = "https://api.github.com/repos/sato064/SE23G1_APP/issues/1/comments"
+    headers = {"Accept": "application/vnd.github+json",
+    "Authorization": GITHUB_TOKEN,
+    "X-GitHub-Api-Version": "2022-11-28"
+    }
+    data = {'body': 'SRS1\n' + review}
+    res = requests.post(url, headers=headers,data=json.dumps(data))
+    print(res)
 
 else:
     f = open('files/srs_1_com.txt', 'r')
