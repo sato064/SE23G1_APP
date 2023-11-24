@@ -110,6 +110,8 @@ if not sub:
         data = {'body': 'SRS1\n' + review}
         res = requests.post(url, headers=headers,data=json.dumps(data))
         print(res)
+        st.success('保存しました')
+        st.text(review)
 
 else:
     f = open('files/srs_1_com.txt', 'r')
