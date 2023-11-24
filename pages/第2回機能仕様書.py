@@ -21,19 +21,11 @@ st.set_page_config(
         """
     })
 
-
-y = [0, 0, 0, 0]
+y_past = [25,6,7,6]
+y = [15,16,1,7]
 filename = 'data/srs_inspection.csv'
-with open(filename, encoding='utf8', newline='') as f:
-    csvreader = csv.reader(f)
-    for row in csvreader:
-        row_num = 0
-        for content in row:
-            row_num += 1
-            if(content == '1'):
-                y[row_num - 2] = y[row_num - 2] + 1
-                
-y = [25,6,7,6]
+
+
 # データの準備
 def get_data():
     data = np.array(
@@ -77,16 +69,17 @@ miss = "情報の誤りが多く指摘されています．誤りは，多くの
 enhance = "改善提案が多く指摘されています．改善提案は，間違いが指摘されているわけではありません．ただし，システムの要件について自分たちの設計で完全に満たされているものか今一度確認するとともに提案された改善案の周辺知識をしっかりと学習すると良いでしょう．"
 other = "形式・誤字脱字・命名規則が多く指摘されています．形式・誤字脱字は，事前のチェックで防げた指摘です． 今一度文書の形式や命名規則について再度学習を行い，チーム内で確認してからインスペクションを行うとよいでしょう．"
 decrease = "指摘数自体は1回目のインスペクションから現象しています．文章の質が向上していることがわかりますね．"
-df = pd.DataFrame({'第1回機能仕様書インスペクション結果': y},
+df = pd.DataFrame({'第1回機能仕様書インスペクション結果': y_past,'第2回機能仕様書インスペクション結果': y},
                     index=["不足・不明", "誤り", "改善要求", "文書形式・誤字脱字・命名規則"])
 
-st.title("第1回機能仕様書インスペクションの結果") # タイトル
+st.title("第2回機能仕様書インスペクションの結果") # タイトル
 st.subheader('指摘数')
 st.table(df.T) # 表の表示
 st.subheader('指摘数の割合')
 st.pyplot(plt, transparent=True) # グラフ表示
 st.subheader('アドバイス文')
 st.info(short)
+st.info(miss)
 st.subheader('振り返り')
 
 f = open('files/srs_1.txt', 'r')
