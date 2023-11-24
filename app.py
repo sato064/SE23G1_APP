@@ -103,13 +103,13 @@ if not sub:
 
     if submitted:
         url = "https://api.github.com/repos/sato064/SE23G1_APP/issues/1/comments"
-    headers = {"Accept": "application/vnd.github+json",
-    "Authorization": GITHUB_TOKEN,
-    "X-GitHub-Api-Version": "2022-11-28"
-    }
-    data = {'body': 'SRS1\n' + review}
-    res = requests.post(url, headers=headers,data=json.dumps(data))
-    print(res)
+        headers = {"Accept": "application/vnd.github+json",
+            "Authorization": GITHUB_TOKEN,
+        "X-GitHub-Api-Version": "2022-11-28"
+        }
+        data = {'body': 'SRS1\n' + review}
+        res = requests.post(url, headers=headers,data=json.dumps(data))
+        print(res)
 
 else:
     f = open('files/srs_1_com.txt', 'r')
