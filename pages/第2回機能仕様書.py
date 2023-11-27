@@ -101,7 +101,7 @@ if not sub:
             "Authorization": GITHUB_TOKEN,
         "X-GitHub-Api-Version": "2022-11-28"
         }
-        data = {'body': 'SRS1\n' + review}
+        data = {'body': 'SRS2\n' + review}
         res = requests.post(url, headers=headers,data=json.dumps(data))
         print(res)
         st.success('保存しました')
