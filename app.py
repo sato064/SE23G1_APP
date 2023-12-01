@@ -89,13 +89,17 @@ st.subheader('アドバイス文')
 st.info(short)
 st.subheader('振り返り')
 
-f = open('files/srs_1.txt', 'r')
-data = f.read()
-if data == "T":
-    sub = True
-else:
-    sub = False
-f.close()
+sub = False
+issue_url = "https://api.github.com/repos/sato064/SE23G1_APP/issues/1/comments"
+headers = {"Accept": "application/vnd.github+json",
+    "Authorization": GITHUB_TOKEN,
+    "X-GitHub-Api-Version": "2022-11-28"
+    }
+res = requests.get(issue_url, headers=headers).json()
+for data in res:
+    if data['body'].startswith('SRS1'):
+        sub = True
+        review = data['body'][5:]
 
 if not sub:
     with st.form("my_form", clear_on_submit=False):
@@ -115,7 +119,5 @@ if not sub:
         st.text(review)
 
 else:
-    f = open('files/srs_1_com.txt', 'r')
-    data = f.read()
-    st.text(data)
-    f.close()
+    st.text(review)
+
